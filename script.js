@@ -1,19 +1,23 @@
 //your JS code here. If required.
-function secondHighest(arr) {
-  if (arr.length < 2) return -Infinity;
+document.addEventListener('DOMContentLoaded', function() {
+    const calculateBtn = document.getElementById('calculateBtn');
+    const resultDiv = document.getElementById('result');
 
-  let first = -Infinity;
-  let second = -Infinity;
+    calculateBtn.addEventListener('click', function() {
+        const input = document.getElementById('arrayInput').value;
+        const arr = input.split(',').map(item => {
+            const num = parseInt(item.trim());
+            return isNaN(num) ? 0 : num;
+        });
+        
+        const result = secondHighest(arr);
+        resultDiv.textContent = result !== -Infinity ? result : '-Infinity';
+    });
 
-  for (let num of arr) {
-    if (num > first) {
-      second = first;
-		
-      first = num;
-    } else if (num < first && num > second) {
-      second = num;
+    function secondHighest(arr) {
+        if (arr.length < 2) return -Infinity;
+        
+        const uniqueSorted = [...new Set(arr)].sort((a, b) => b - a);
+        return uniqueSorted.length >= 2 ? uniqueSorted[1] : -Infinity;
     }
-  }
-
-  return (second === -Infinity) ? -Infinity : second;
-}
+});
